@@ -10,6 +10,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -43,6 +45,23 @@ public class MemoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_memo);
         getSupportActionBar().setTitle("Alimi");
 
+        Button b = (Button)findViewById(R.id.action2_home);
+        b.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                int id = v.getId();
+                switch (id){
+                    case R.id.action2_home:
+                        onBackPressed();
+                        Intent intentHome = new Intent(getApplicationContext(), MainActivity.class);
+                        intentHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intentHome.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intentHome);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
         //switch 버튼 실행
         switch1=(Switch)findViewById(R.id.switch1);
         switch2=(Switch)findViewById(R.id.switch2);
@@ -164,7 +183,6 @@ public class MemoActivity extends AppCompatActivity {
         }
         super.onBackPressed();
     }
-
     // time/date 버튼
     public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
@@ -220,5 +238,10 @@ public class MemoActivity extends AppCompatActivity {
         Intent intent_01=new Intent(getApplicationContext(), memo_location.class);
         startActivity(intent_01);
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_memo, menu);
+        return true;
+    }
 }
